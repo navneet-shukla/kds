@@ -1,0 +1,54 @@
+<!--Header-section-start-->
+<header>
+  <div class="container">
+    <div class="header-inn">
+      <div class="logout"><a href="javascript:void(0);" (click)="doLogOut()">Logout</a></div>
+      <div class="title">commandes</div>
+<ui-switch [checked]=mybtnchk size="medium" labelOn="servie" labelOff="à préparer" switchColor="#fcfcfc" defaultBgColor="red" checkedTextColor="red" uncheckedTextColor="red" (change)="switchBtn($event)"></ui-switch>
+
+        <div class="filter" data-toggle="modal" data-target="#settingsModal"> <img src="assets/images/setting.png" alt=""/></div>
+      <div class="filter"> <a class="filterOpen" href="javaScript:void(0)" onClick="move();"><img src="assets/images/filter-icon.png" alt=""/></a> </div>
+      </div>
+  </div>
+</header>
+<!--Header-section-End-->
+
+<!-- Modal -->
+<div class="modal fade" id="settingsModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Paramètres de l'imprimante</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form [formGroup]="printerSettingForm" (ngSubmit)="settings()">
+      <div class="modal-body">
+          <div class="form-group">
+          <label>Adresse IP de l'imprimante</label>
+          <input class="form-control" formControlName="ip_address" type="text" name="ip_address" [ngClass]="{ 'is-invalid': submitted && f.ip_address.errors }" />
+              <div *ngIf="submitted && f.ip_address.errors" class="invalid-feedback">
+                  <div *ngIf="f.ip_address.errors.required">Veuillez saisir une adresse IP valide </div>
+              </div>
+          </div>
+          <div class="form-group">
+          <label>Device ID</label>
+          <input class="form-control" formControlName="device_id" type="text" name="device_id" [ngClass]="{ 'is-invalid': submitted && f.device_id.errors }" />
+              <div *ngIf="submitted && f.device_id.errors" class="invalid-feedback">
+                  <div *ngIf="f.device_id.errors.required">Veuillez saisir un ID de périphérique valide</div>
+              </div>
+          </div>
+
+
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-primary apply-btn ok-btn" type="submit">Sauvegarder</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" #closeBtn>Fermer</button>
+        <!--        <button type="button" class="btn btn-primary">Save Commentaries</button>-->
+      </div>
+      </form>
+    </div>
+  </div>
+</div>
+<!--main-section-end-->

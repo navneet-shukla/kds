@@ -1,0 +1,44 @@
+<div class="middle-box animated fadeInDown custom-login">
+  <div class="ibox-content">
+    <h2 class="font-bold">S'identifier</h2>
+
+    <form autocomplete="off" [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="m-t">
+
+<!--      <input type="hidden" name="_token" value="IdnurWMj7xkPA89Oi50K3QJv8m9Q7ZPxIvoBCEfA">-->
+
+     <!-- <div class="form-group" [ngClass]="{'has-error':loginForm.get('email').invalid && (loginForm.get('email').dirty || loginForm.get('email').touched)}">
+        <input type="email" class="form-control inpt" placeholder="Username" formControlName="email" autocomplete="on">
+        <div *ngFor="let validation of account_validation_messages.email">
+          <span class="help-block" *ngIf="loginForm.get('email').hasError(validation.type) && (loginForm.get('email').dirty || loginForm.get('email').touched)">{{validation.message}}</span>
+        </div>
+      </div>
+      <div class="form-group" [ngClass]="{'has-error':loginForm.get('password').invalid && (loginForm.get('password').dirty || loginForm.get('password').touched)}">
+        <input type="password" class="form-control inpt" placeholder="Password" formControlName="password" autocomplete="on">
+        <div *ngFor="let validation of account_validation_messages.password">
+          <span class="help-block" *ngIf="loginForm.get('password').hasError(validation.type) && (loginForm.get('password').dirty || loginForm.get('password').touched)">{{validation.message}}</span>
+        </div>
+      </div>-->
+
+<div *ngIf="myerrorNotify" class="form-group has-error">
+	<span class="help-block">{{myerrorNotify}}</span>	</div>
+       <div class="form-group" [ngClass]="{'has-error':loginForm.get('email').invalid && (loginForm.get('email').dirty || loginForm.get('email').touched)}">
+
+		 <input type="email" name="email" class="form-control" formControlName="email" placeholder="Nom d'utilisateur" value="">
+		 <div *ngFor="let validation of account_validation_messages.email">
+		   <span class="help-block" *ngIf="loginForm.get('email').hasError(validation.type) && (loginForm.get('email').dirty || loginForm.get('email').touched)">{{validation.message}}</span>
+		 </div>
+	   </div>
+
+	   <div class="form-group" [ngClass]="{'has-error':loginForm.get('password').invalid && (loginForm.get('password').dirty || loginForm.get('password').touched)}">
+
+		 <input type="password" name="password" class="form-control" formControlName="password" placeholder="Mot de passe" value="">
+		 <div *ngFor="let validation of account_validation_messages.password">
+		   <span class="help-block" *ngIf="loginForm.get('password').hasError(validation.type) && (loginForm.get('password').dirty || loginForm.get('password').touched)">{{validation.message}}</span>
+		 </div>
+	   </div>
+
+	   <button type="submit" class="btn btn-primary block full-width m-b">Se connecter</button>
+
+	 </form>
+   </div>
+ </div>

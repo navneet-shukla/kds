@@ -1,0 +1,223 @@
+<app-header></app-header>
+
+<!--Header filter Start-->
+<div class="filterPanel">
+	<div class="filterTitle"><span>Afficher</span></div>
+	<ul class="nav nav-pills mb-5" id="pills-tab" role="tablist">
+		<li class="nav-item"><a class="nav-link active" id="pills-home-tab" data-toggle="pill"
+				href="javascript:void(0);" role="tab" aria-controls="pills-home" aria-selected="true"
+				(click)="changeCheckCategAllFilter(1)">tout selectionner</a></li>
+		<li class="nav-item"><a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="javascript:void(0);"
+				role="tab" aria-controls="pills-profile" aria-selected="false"
+				(click)="changeCheckCategAllFilter(0)">RÉINITIALISER</a></li>
+	</ul>
+	<div class="tab-content" id="pills-tabContent">
+      <form [formGroup]="orderListFilterForm" (change)="orderListFilter()">
+        <input type="hidden" formControlName="restaurantId" >
+		<div class="tab-pane fade show active" id="filter-one-tab" role="tabpanel" aria-labelledby="pills-home-tab">
+          <perfect-scrollbar style="max-width: 600px; max-height: 200px;" >
+
+          <ul class="filterOption">
+				<li *ngFor="let category of categories; let i = index" >
+					<div class="custom-control custom-checkbox">
+								<input type="checkbox" class="custom-control-input"
+									(change)="oncheckedCheckbox(category?.id, $event.target.checked)"
+									[checked]='(defaultChecked?.length > 0) ? (defaultChecked.indexOf(category?.id) > -1) : checkCategAllFilter ' id="customRadio-{{category?.id}}"
+									value="{{category?.id}}">
+								<label class="custom-control-label"
+									for="customRadio-{{category?.id}}">{{category?.name}}</label>
+					</div>
+				</li>
+			</ul>
+          </perfect-scrollbar>
+			<ul class="filterOption mt-5">
+				<li>
+					<div class="custom-control custom-checkbox">
+							<input type="checkbox" class="custom-control-input" id="customRadio6" value="0"
+							       (change)="oncheckedCheckbox(0, $event.target.checked,'type')"
+							       [checked]='checkCategAllFilter'>
+							<label class="custom-control-label" for="customRadio6"><img src="assets/images/icon2.png"
+							                                                            alt="icon2" /> Sur place</label>
+						</div>
+					</li>
+					<li>
+						<div class="custom-control custom-checkbox">
+							<input type="checkbox" class="custom-control-input" id="customRadio5" value="1"
+								(change)="oncheckedCheckbox(1, $event.target.checked,'type')"
+								[checked]='checkCategAllFilter'>
+							<label class="custom-control-label" for="customRadio5"> <img
+									src="assets/images/iconFilter.png" alt="icon1" /> A emporter</label>
+					</div>
+				</li>
+
+				<li>
+					<div class="custom-control custom-checkbox">
+							<input type="checkbox" class="custom-control-input" id="customRadio7" value="2"
+							       (change)="oncheckedCheckbox(2, $event.target.checked,'type')"
+								[checked]='checkCategAllFilter'>
+							<label class="custom-control-label" for="customRadio7"><img src="assets/images/delivery-filter.png"
+							                                                            alt="icon2" /> Livraison</label>
+					</div>
+				</li>
+			</ul>
+		</div>
+      </form>
+<!--      <div class="tab-pane fade" id="filter-two-tab" role="tabpanel" aria-labelledby="pills-profile-tab">Profile</div>-->
+	</div>
+</div>
+<!--Header filter End-->
+
+<!--main-section-start-->
+<section>
+	<!--main banner start-->
+	<article class="main-info">
+		<div class="service-box">
+			<div class="form-group" *ngIf="orders?.length == 0">Aucune commande pour aujourd'hui.</div>
+			<ng-container *ngFor="let order of orders; let i = index">
+			<div class="item" >
+					<div class="order-box-detail "
+						[ngStyle]="order.consumptionMode == 1 ? {'background-color':'#C5324C'} : {'background-color': '#576574'}">
+					<div class="order-box-3">
+							<div class="date">
+								<!--{{order.orderPlacedDate|date}}-->
+								<span>{{calculateOrderWaitingTime(order.orderPlacedDate) }}</span></div>
+					</div>
+					<div class="order-box-top">
+						<div class="order-box-1">
+								<ng-container *ngIf="order.consumptionMode == 1; else elseIfMode">
+								<img src="assets/images/icon1.png" alt="spoon">
+							</ng-container>
+								<ng-template #elseIfMode>
+									<ng-container *ngIf="order.consumptionMode == 0; else elseMode">
+								<img src="assets/images/spoon.png" alt="spoon">
+									</ng-container>
+
+								</ng-template>
+								<ng-template #elseMode>
+									<img src="assets/images/delivery-order.png" alt="spoon">
+							</ng-template>
+							<div class="top-left">
+<!--								<h1>{{order.customer.name}}</h1>-->
+								<span>{{order.noOfPersons}} couverts</span> </div>
+						</div>
+							<!--<div class="rightActiveLink">
+								<div class="chk" (click)="selectAllItems(order.id)"
+									id="selectAllItemsCheck-{{order.id}}">&nbsp;</div>
+								<a class="orderReady" href="javascript:void(0);"
+									(click)="sendServeStatus(order.id)">&nbsp;</a>
+							</div>-->
+						<div class="rightActiveLink">
+								<div class="chk1" (click)="selectAllItems(order.id,'selectAll')"
+								     id="selectAllItemsCheck1-{{order.id}}">&nbsp;</div>
+								<div class="chk2" (click)="selectAllItems(order.id,'unselectAll')"
+								     id="selectAllItemsCheck2-{{order.id}}">&nbsp;</div>
+								<a class="orderReady" href="javascript:void(0);"
+								   (click)="sendServeStatus(order.id)">&nbsp;</a>
+							</div>
+							</div>
+					<div class="ticket-offer">
+						<div class="ticket-count">Ticket <span>{{order.orderId}}</span></div>
+						<div class="ticketRight">
+
+							<div class="order-box-2">
+								<div class="price" *ngIf="order.table">Table {{order.table.name}}</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+				<ng-container *ngFor="let orderItem of order.items; let i = index;let even = even; let odd = odd;">
+			<div class="item customServiceBox-{{order.id}}">
+						<div class="orderList"
+							[ngClass]="{'selected selected-all': orderItem.cookStatus == '1', odd: odd, even: even}"
+							data-id="{{orderItem.id}}" [ngStyle]="{'background-color': (orderItem.cookPriorityRequest==1) ? '#ffa500' : ''}"><a href="javascript:void(0);">
+							<div class="selectAllFunct" style="display:none;" (click)="itemOrderClicked(orderItem.id,orderItem.productId,order.id,'0',orderItem.cookId,orderItem.sideDishesStatus)">Select</div>
+							<div class="unselectAllFunct" style="display:none;" (click)="itemOrderClicked(orderItem.id,orderItem.productId,order.id,'1',orderItem.cookId,orderItem.sideDishesStatus)">UnSelect</div>
+								<div class="dish-order-count" data-id="{{orderItem.sideDishesStatus}}"
+									(click)="itemOrderClicked(orderItem.id,orderItem.productId,order.id,orderItem.cookStatus,orderItem.cookId,orderItem.sideDishesStatus)">
+									<span>{{orderItem.count}}</span></div>
+								<div class="dish-order-detail" [ngClass]="{'maxBtn ': orderItem.sideDishes.length > 5}"
+									(click)="itemOrderClicked(orderItem.id,orderItem.productId,order.id,orderItem.cookStatus,orderItem.cookId,orderItem.sideDishesStatus)">
+									<span style="color: red; font-size: 20px;"
+										*ngIf="orderItem.sideDishesStatus==1">&#8627;</span>
+						<h3>{{orderItem.name}}</h3>
+						<div class="tags blue" *ngIf="orderItem.foodType">{{orderItem.foodType}}</div>
+						<div class="tags red" *ngIf="orderItem.cookingType">{{orderItem.cookingType}}</div>
+									<div class="" style=" display: inline-block;" *ngIf="orderItem.price == 0 "><img src="assets/images/free.png" height="25px" width="25px" alt="print-icon"></div>
+
+						<!-- <ng-container *ngIf="orderItem.sideDishes.length > 0">
+							<ng-container *ngFor="let sideDish of orderItem.sideDishes; let cnt = index; ">
+
+								<div class="tags" [ngClass]="getBackgroundColor(cnt)">{{sideDish.name}}</div>
+							</ng-container>
+						</ng-container> -->
+					</div>
+								<!-- <div class="active-select"
+									(click)="sendServeStatus(orderItem.id,'item',orderItem.sideDishesStatus)"><img
+										class="active-img" src="assets/images/tick-active.png" alt="tick-active"><img
+										class="active-all-img" src="assets/images/tick-all-active.png"
+										alt="tick-active"></div> -->
+				</a> </div>
+			</div>
+				</ng-container>
+			<div class="item">
+				<div class="footer-elements">
+						<div class="link-ftr"> <a href="javascript:void(0);"><img src="assets/images/print-icon.png"
+									alt="print-icon" (click)="printReceipt(order.id,1)"></a> <a href="javascript:void(0);"
+								(click)="deleteOrder(order.id)"><img src="assets/images/delete-icon.png"
+									alt="delete-icon"></a> </div>
+					<div class="notification" data-toggle="modal" data-target="#commentariesModal"
+							(click)="getOrderComments(order.id,order.orderId)">
+							<a href="javascript:void(0);">commentaires <span><img src="assets/images/notification.png"
+										alt="notification">
+									<ng-container *ngIf="order?.comments?.length; else elseMode1">
+										<div class="notify-count"
+											[ngStyle]="order?.comments?.length > 0 ? {'background-color':'#d93d59'} : {'background-color': '#34495e'}">
+											{{order?.comments?.length}}</div>
+									</ng-container>
+									<ng-template #elseMode1>
+										<div class="notify-count">0</div>
+									</ng-template>
+								</span>
+							</a>
+						</div>
+				</div>
+			</div>
+			</ng-container>
+			</div>
+	</article>
+	<!--main banner end-->
+</section>
+<!-- Modal -->
+<div class="modal fade" id="commentariesModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+	aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLabel">Commentaires</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<div *ngIf="orderComments != ''; then thenBlock else elseBlock"></div>
+
+				<ng-template #elseBlock>Sans commentaires</ng-template>
+
+				<ng-template #thenBlock>
+					<ul >
+						<ng-container *ngFor="let orderComment of orderComments; let i = index">
+							<li>{{orderComment.comment}}</li>
+						</ng-container>
+					</ul>
+				</ng-template>
+
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+				<!--        <button type="button" class="btn btn-primary">Save Commentaries</button>-->
+			</div>
+		</div>
+	</div>
+</div>
+<!--main-section-end-->

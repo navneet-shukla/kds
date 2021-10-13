@@ -1,0 +1,61 @@
+<!doctype html>
+
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+  <title>KDS</title>
+  <meta name="csrf-token" content="IdnurWMj7xkPA89Oi50K3QJv8m9Q7ZPxIvoBCEfA">
+  <base href="/">
+  <link rel="icon" type="image/x-icon" href="assets/images/favicon.ico">
+  <!--Bootstrap Framework Css-->
+  <link href="assets/css/bootstrap.min.css"  rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Montserrat:300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&display=swap" rel="stylesheet">
+
+  <!--Bootstrap Framework Css-->
+
+  <!--Main Css-->
+  <link href="assets/css/custom.css" rel="stylesheet" type="text/css">
+  <!--Main Css-->
+  <!-- Owl Stylesheets -->
+  <link rel="stylesheet" href="assets/css/owl.carousel.min.css">
+  <!-- Owl Stylesheets -->
+</head>
+
+<body>
+
+
+<app-root></app-root>
+
+
+<script type="text/javascript" src="assets/js/jquery.min.js"></script>
+<script type="text/javascript" src="assets/js/bootstrap.min.js"></script>
+<!--<script src="assets/js/owl.carousel.js"></script>-->
+<script src="assets/js/custom.js"></script>
+
+<script type="text/javascript" src="assets/js/epos-2.0.0.js"></script>
+
+
+<!--Bootstrap Framework Css-->
+<script type="text/javascript">
+  function move(){
+    var val = $(".filterPanel").css("right");
+    if(val=='0px'){
+      $(".filterPanel").animate(
+          {"right": "-550px"},
+          "slow", function(){
+
+          });
+    }else{
+      $(".filterPanel").animate(
+          {"right": "0"},
+          "slow", function(){
+
+          });
+    }
+
+  }
+
+</script>
+</body>
+</html>
